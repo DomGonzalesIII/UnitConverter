@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Inches/Mm Conversion App</title>
+
+  <!-- Links -->
+  <link rel="icon" href="#" sizes="16x16" type="image/png">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <style media="screen">
+
+    body {
+      background-color: blue;
+      background-color: #3399ff;
+      font-family: 'Roboto', sans-serif;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    button {
+      border-radius: 8px;
+      box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, .2);
+      font-size: 1.75rem;
+      height: 51px;
+      margin: 32px 0 0 0;
+      width: 166px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 47px;
+      text-decoration: underline;
+    }
+
+    .content {
+      background-color: white;
+      background-color: #fefefe;
+      border-radius: 15px;
+      box-shadow: 6px 6px 2px 1px rgba(0, 0, 0, .2);
+      margin: 150px auto;
+      padding: 50px 20px;
+      width: 50%;
+    }
+
+    #results {
+      font-size: 3rem;
+    }
+
+  </style>
+
+</head>
+
+<body>
+  <!-- Content -->
+  <div class="content">
+
+    <h1>Inches/Millimeters Conversion Tool</h1>
+
+    <div class="inputFields">
+      <label for="inches">Inch(es): </label>
+      <input type="number" name="inches" value="" placeholder="0.00&quot;" id="inches">
+      <!--onkeyup="" - calls when the user let go of the key-->
+      <label for="milli">Millimeter(s): </label>
+      <input type="number" name="mms" value="" placeholder="0.00mm" id="milli">
+    </div>
+
+    <div class="convertButton">
+      <button type="button" name="Btn" id="Btn">Convert</button>
+    </div>
+
+    <p>Results:</p>
+    <p id="results">0.00 Inches = 0.00 Millimeters</p>
+
+  </div>
+
+  <!-- End Content -->
+
+  <!-- Javascript -->
+  <script type="text/javascript">
+    // 'get' button element
+    // DO I NEED THIS???
+    //var theResultsBtn = document.getElementById('Btn');
+
+    // conversion function
+    // TODO: Add functionality for user to press enter to click button
+    function convert() {
+      // get Inches
+      var inchesElement = document.getElementById('inches');
+      var inches = inchesElement.value;
+
+      // get Millimeters
+      var millimetersElement = document.getElementById('milli');
+      var millimeters = millimetersElement.value;
+
+      // results variable and results id element
+      var result = 0;
+      var resultsElement = document.getElementById('results');
+
+      // converts to inches is inches is blank, millimeters if millimeters is blank, or gives error message if both fields are blank or filled
+      if ((inches == 0 || inches == null) && (millimeters == 0 || millimeters == null)) {
+        result = 'Please enter a value for inches or millimeters';
+        resultsElement.innerText = result;
+      } else if (inches < 0 || millimeters < 0) {
+        result = 'Please enter a positive value for inches or millimeters';
+        resultsElement.innerText = result;
+      } else if (inches > 0 && millimeters > 0) {
+        result = 'Please only enter a value for inches or millimeters, not both.';
+        resultsElement.innerText = result;
+      } else if (inches == 0 || inches == null) {
+        result = (millimeters * 0.0393701).toFixed(3);
+        resultsElement.innerText = millimeters + ' Millimeter(s) = ' + result + ' Inch(es)';
+      } else if (millimeters == 0 || millimeters == null) {
+        result = (inches * 25.4).toFixed(3);
+        resultsElement.innerText = inches + ' Inch(es) = ' + result + ' Millimeter(s)';
+      } else {
+        result = 'Bro-chacho, what even are you doing?';
+        resultsElement.innerText = result;
+      }
+    }
+    // upon page load, call onStart function
+    document.addEventListener("DOMContentLoaded", onStart())
+
+    // call eventlistener for btn
+    function onStart() {
+      document.getElementById('Btn').addEventListener('click', convert);
+    }
+  </script>
+  <!-- End Javascript -->
+
+</body>
+
+</html>

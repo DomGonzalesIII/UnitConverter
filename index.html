@@ -83,7 +83,7 @@
   <!-- Javascript -->
   <script type="text/javascript">
     // 'get' button element
-    // DO I NEED THIS???
+    // DO I NEED THIS??? JB - Nope not anymore! Since you already have a hook to document on content loaded event, and assign the click event to the button this is no longer necessary
     //var theResultsBtn = document.getElementById('Btn');
 
     // conversion function
@@ -102,23 +102,27 @@
       var resultsElement = document.getElementById('results');
 
       // converts to inches is inches is blank, millimeters if millimeters is blank, or gives error message if both fields are blank or filled
-      if ((inches == 0 || inches == null) && (millimeters == 0 || millimeters == null)) {
+      if ((inches == 0 || !inches ) && (millimeters == 0 || !millimeters)) {
         result = 'Please enter a value for inches or millimeters';
         resultsElement.innerText = result;
       } else if (inches < 0 || millimeters < 0) {
         result = 'Please enter a positive value for inches or millimeters';
         resultsElement.innerText = result;
+        // JB- I'm concern about this one... 
       } else if (inches > 0 && millimeters > 0) {
         result = 'Please only enter a value for inches or millimeters, not both.';
         resultsElement.innerText = result;
       } else if (inches == 0 || inches == null) {
-        result = (millimeters * 0.0393701).toFixed(3);
+        result = (millimeters / 25.4).toFixed(3);
         resultsElement.innerText = millimeters + ' Millimeter(s) = ' + result + ' Inch(es)';
       } else if (millimeters == 0 || millimeters == null) {
         result = (inches * 25.4).toFixed(3);
         resultsElement.innerText = inches + ' Inch(es) = ' + result + ' Millimeter(s)';
       } else {
-        result = 'Bro-chacho, what even are you doing?';
+        // JB- can't imagine this condition... might as well alert the audience instead...
+        result = 'Bro-chacho, what even are you doing?';  
+        // JB- Bring up a pop up window alerting the operator
+        alert(result);
         resultsElement.innerText = result;
       }
     }

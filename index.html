@@ -22,54 +22,35 @@
     body {
       background-color: blue;
       background-color: #3399ff;
+      color: white;
       color: #333;
       font-family: 'Roboto', sans-serif;
       font-size: 2rem;
       height: 100%;
-      position: fixed;
       text-align: center;
       width:100%;
     }
 
-    button {
-      background: #dff0ea;
-      -webkit-border-radius: 10;
-      -moz-border-radius: 10;
-      border-radius: 10px;
-      -webkit-box-shadow: 0px 1px 3px #666666;
-      -moz-box-shadow: 0px 1px 3px #666666;
-      box-shadow: 0px 1px 3px #666666;
-      color: #333;
-      font-size: 1.75rem;
-      height: 51px;
-      margin: 32px 0 0 0;
-      outline: 0;
-      padding: 10px 20px 10px 20px;
-      text-decoration: none;
-      width: 166px;
-    }
-
-    button:hover {
-      background: #dff0ea;
-      background-image: -webkit-linear-gradient(top, #dff0ea, #adbeb8);
-      background-image: -moz-linear-gradient(top, #dff0ea, #adbeb8);
-      background-image: -ms-linear-gradient(top, #dff0ea, #adbeb8);
-      background-image: -o-linear-gradient(top, #dff0ea, #adbeb8);
-      background-image: linear-gradient(to bottom, #dff0ea, #adbeb8);
-      text-decoration: none;
-    }
-
     footer {
-      bottom: 1%;
       color: #333;
       font-size: 0.75rem;
-      position: absolute;
-      right: 1%;
     }
 
     h1 {
       font-size: 2.5rem;
-      margin-bottom: 47px;
+      /*margin-bottom: 47px;*/
+    }
+
+    input {
+      display: block;
+      height: 50px;
+      width: 100%;
+    }
+
+    input::-webkit-inner-spin-button,
+    input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
     }
 
     /************************ CLASS SELECTORS ************************/
@@ -79,18 +60,13 @@
       background-color: #fefefe;
       border-radius: 15px;
       box-shadow: 6px 6px 2px 1px rgba(0, 0, 0, .2);
-      margin: 150px auto;
-      padding: 50px 20px;
+      margin: 50px auto;
+      padding: 20px;
       width: 50%;
     }
 
-    /************************** ID SELECTORS *************************/
-
-    #results {
-      font-size: 3rem;
-    }
-
   </style>
+  <!-- End CSS -->
 
 </head>
 
@@ -101,91 +77,61 @@
 
     <h1>Inches <i class="fas fa-exchange-alt" style="font-size: 1.75rem;"></i> Millimeters</h1>
 
+    <!-- Input Fields -->
     <div class="inputFields">
-      <label for="inches">Inch(es): </label>
-      <input type="number" name="inches" value="" placeholder="0.00&quot;" id="inches">
-      <!--onkeyup="" - calls when the user let go of the key-->
-      <label for="milli">Millimeter(s): </label>
-      <input type="number" name="mms" value="" placeholder="0.00mm" id="milli">
+      <div class="inchField">
+        <input type="number" name="inches" value="" placeholder="0.00&quot;" id="inches" onkeyup="convertToMilli()">
+        <label for="inches">Inches</label>
+      </div>
+      <div class="milliField">
+        <input type="number" name="mms" value="" placeholder="0.00mm" id="milli" onkeyup="convertToInches()">
+        <label for="milli">Millimeters</label>
+      </div>
     </div>
-
-    <div class="convertButton">
-      <button type="button" name="Btn" id="Btn">Convert</button>
-    </div>
-
-    <p>Results:</p>
-    <p id="results">0.00 Inches = 0.00 Millimeters</p>
+    <!-- End Input Fields -->
 
   </div>
+  <!-- End Content -->
 
   <footer>
 
+    <div class="iconCredits">
+      ADD credit for icons here
+    </div>
+    <div class="version">
+      v2.0.0.0 dgIII
+    </div>
 
-
-
-
-ADD credit for icons here
-
-
-
-
-
-
-
-
-    v1.0.0.0 dgIII</footer>
-
-  <!-- End Content -->
+  </footer>
 
   <!-- Javascript -->
   <script type="text/javascript">
-    // 'get' button element
-    // DO I NEED THIS???
-    //var theResultsBtn = document.getElementById('Btn');
 
-    // conversion function
-    // TODO: Add functionality for user to press enter to click button
-    function convert() {
-      // get Inches
-      var inchesElement = document.getElementById('inches');
-      var inches = inchesElement.value;
+    // converts user's inch input to millimeters and displays in millimeters input field
+    function convertToMilli() {
+      // get inches
+      var inches = document.getElementById('inches').value;
+
+      // results variable
+      var result = (inches * 25.4).toFixed(3);
+
+      // post result to millimeter field
+      document.getElementById('milli').value = result;
+    }
+
+    // converts user's millimeter input to inches and displays in inches input field
+    function convertToInches() {
 
       // get Millimeters
-      var millimetersElement = document.getElementById('milli');
-      var millimeters = millimetersElement.value;
+      var millimeters = document.getElementById('milli').value;
 
-      // results variable and results id element
-      var result = 0;
-      var resultsElement = document.getElementById('results');
+      // results variable
+      var result = (millimeters * 0.0393701).toFixed(3);
 
-      // converts to inches is inches is blank, millimeters if millimeters is blank, or gives error message if both fields are blank or filled
-      if ((inches == 0 || inches == null) && (millimeters == 0 || millimeters == null)) {
-        result = 'Please enter a value for inches or millimeters';
-        resultsElement.innerText = result;
-      } else if (inches < 0 || millimeters < 0) {
-        result = 'Please enter a positive value for inches or millimeters';
-        resultsElement.innerText = result;
-      } else if (inches > 0 && millimeters > 0) {
-        result = 'Please only enter a value for inches or millimeters, not both.';
-        resultsElement.innerText = result;
-      } else if (inches == 0 || inches == null) {
-        result = (millimeters * 0.0393701).toFixed(3);
-        resultsElement.innerText = millimeters + ' Millimeter(s) = ' + result + ' Inch(es)';
-      } else if (millimeters == 0 || millimeters == null) {
-        result = (inches * 25.4).toFixed(3);
-        resultsElement.innerText = inches + ' Inch(es) = ' + result + ' Millimeter(s)';
-      } else {
-        result = 'Bro-chacho, what even are you doing?';
-        resultsElement.innerText = result;
-      }
+      // post result to millimeter field
+      document.getElementById('inches').value = result;
     }
-    // upon page load, call onStart function
-    document.addEventListener("DOMContentLoaded", onStart())
 
-    // call eventlistener for btn
-    function onStart() {
-      document.getElementById('Btn').addEventListener('click', convert);
-    }
   </script>
   <!-- End Javascript -->
 
